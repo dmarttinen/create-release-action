@@ -3,41 +3,41 @@ import { getBooleanInput, getInput, getMultilineInput } from '@actions/core'
 export interface InputParameters {
 
   apiKey: string
-  space: string
-  project: string
-  releaseNumber: string
-  deployTo: string
-  progress: boolean
-  tenantTag: string
-  tenantTags: string[]
-  timeout: string
-  server: string
-  tenant: string
-  tenants: string[] 
-  forcePackageDownload: boolean 
   cancelOnTimeout: boolean
   channel: string
   configFile: string
   debug: boolean
   deployAt: string
+  deployTo: string
   deploymentCheckSleepCycle: string
   deploymentTimeout: string
   excludeMachines: string
   force: boolean
+  forcePackageDownload: boolean   
   guidedFailure: string
   ignoreSslErrors: boolean
   logLevel: string
   noDeployAfter: string
   noRawLog: boolean
   password: string
+  progress: boolean
+  project: string
   proxy: string
   proxyPassword: string
   proxyUsername: string
   rawLogFile: string
+  releaseNumber: string
+  server: string
   skip: string
+  space: string
   specificMachines: string
-  updateVariables: boolean
+  tenant: string
+  tenants: string[] 
+  tenantTag: string
+  tenantTags: string[]  
+  timeout: string
   username: string
+  updateVariables: boolean
   variable: string
   variables: string[]
   waitForDeployment: boolean

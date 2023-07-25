@@ -3297,7 +3297,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createRelease = void 0;
+exports.deployRelease = void 0;
 const core_1 = __nccwpck_require__(186);
 const exec_1 = __nccwpck_require__(514);
 function getArgs(parameters) {
@@ -3391,9 +3391,12 @@ function getArgs(parameters) {
         parameters.variables.map(v => args.push(`--variable=${v}`));
     if (parameters.waitForDeployment)
         args.push(`--waitForDeployment`);
+    if(parameters.udpateVariables)
+        args.push(`--updateVariables`);
+
     return args;
 }
-function createRelease(parameters) {
+function deployRelease(parameters) {
     return __awaiter(this, void 0, void 0, function* () {
         const args = getArgs(parameters);
         const options = {
@@ -3419,7 +3422,7 @@ function createRelease(parameters) {
                         return;
                     }
                     switch (line) {
-                        case 'Creating release...':
+                        case 'Deploying release...':
                             (0, core_1.info)('🐙 Deploying a release in Octopus Deploy...');
                             break;
                         default:
@@ -3440,7 +3443,7 @@ function createRelease(parameters) {
         }
     });
 }
-exports.createRelease = createRelease;
+exports.deployRelease = deployRelease;
 
 
 /***/ }),
@@ -3460,14 +3463,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const create_release_1 = __nccwpck_require__(34);
+const deploy_release_1 = __nccwpck_require__(34);
 const input_parameters_1 = __nccwpck_require__(519);
 const core_1 = __nccwpck_require__(186);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const inputParameters = (0, input_parameters_1.get)();
-            yield (0, create_release_1.createRelease)(inputParameters);
+            yield (0, deploy_release_1.deployRelease)(inputParameters);
         }
         catch (e) {
             if (e instanceof Error) {
@@ -3496,7 +3499,6 @@ function get() {
         channel: (0, core_1.getInput)('channel'),
         configFile: (0, core_1.getInput)('config_file'),
         debug: (0, core_1.getBooleanInput)('debug'),
-        defaultPackageVersion: (0, core_1.getBooleanInput)('default_package_version'),
         deployAt: (0, core_1.getInput)('deploy_at'),
         deployTo: (0, core_1.getInput)('deploy_to'),
         deploymentCheckSleepCycle: (0, core_1.getInput)('deployment_check_sleep_cycle'),
@@ -3504,20 +3506,11 @@ function get() {
         excludeMachines: (0, core_1.getInput)('exclude_machines'),
         force: (0, core_1.getBooleanInput)('force'),
         forcePackageDownload: (0, core_1.getBooleanInput)('force_package_download'),
-        gitRef: (0, core_1.getInput)('git_ref'),
-        gitCommit: (0, core_1.getInput)('git_commit'),
         guidedFailure: (0, core_1.getInput)('guided_failure'),
-        ignoreChannelRules: (0, core_1.getBooleanInput)('ignore_channel_rules'),
-        ignoreExisting: (0, core_1.getBooleanInput)('ignore_existing'),
         ignoreSslErrors: (0, core_1.getBooleanInput)('ignore_ssl_errors'),
         logLevel: (0, core_1.getInput)('log_level'),
         noDeployAfter: (0, core_1.getInput)('no_deploy_after'),
         noRawLog: (0, core_1.getBooleanInput)('no_raw_log'),
-        package: (0, core_1.getInput)('package'),
-        packages: (0, core_1.getMultilineInput)('packages').map(p => p.trim()),
-        packagePrerelease: (0, core_1.getInput)('package_prerelease'),
-        packageVersion: (0, core_1.getInput)('package_version'),
-        packagesFolder: (0, core_1.getInput)('packages_folder'),
         password: (0, core_1.getInput)('password'),
         progress: (0, core_1.getBooleanInput)('progress'),
         project: (0, core_1.getInput)('project'),
@@ -3525,8 +3518,6 @@ function get() {
         proxyPassword: (0, core_1.getInput)('proxy_password'),
         proxyUsername: (0, core_1.getInput)('proxy_username'),
         rawLogFile: (0, core_1.getInput)('raw_log_file'),
-        releaseNotes: (0, core_1.getInput)('release_notes'),
-        releaseNotesFile: (0, core_1.getInput)('release_notes_file'),
         releaseNumber: (0, core_1.getInput)('release_number'),
         server: (0, core_1.getInput)('server'),
         skip: (0, core_1.getInput)('skip'),
@@ -3538,10 +3529,10 @@ function get() {
         tenantTags: (0, core_1.getMultilineInput)('tenant_tags').map(p => p.trim()),
         timeout: (0, core_1.getInput)('timeout'),
         username: (0, core_1.getInput)('user'),
+        udpateVariables: (0, core_1.getInput)('update_variables'),
         variable: (0, core_1.getInput)('variable'),
         variables: (0, core_1.getMultilineInput)('variables').map(p => p.trim()),
         waitForDeployment: (0, core_1.getBooleanInput)('wait_for_deployment'),
-        whatIf: (0, core_1.getBooleanInput)('what_if')
     };
 }
 exports.get = get;
