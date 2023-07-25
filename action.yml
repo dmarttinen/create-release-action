@@ -1,5 +1,5 @@
-name: 'Create Release in Octopus Deploy'
-description: 'GitHub Action to create a release in Octopus Deploy'
+name: 'Deploy Release in Octopus Deploy'
+description: 'GitHub Action to deploy a release in Octopus Deploy'
 author: 'Octopus Deploy'
 branding:
   color: 'blue'
@@ -18,9 +18,6 @@ inputs:
   debug:
     default: false
     description: 'Enable debug logging.'
-  default_package_version:
-    default: false
-    description: 'Use the default version number of all packages for this release.'
   deploy_at:
     description: 'The time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.'
   deploy_to:
@@ -39,19 +36,9 @@ inputs:
   force_package_download:
     default: false
     description: 'Force download of installed packages.'
-  git_ref:
-    description: 'Git branch reference to the specific resources of a version controlled Octopus Project. This is required for version controlled projects.'
-  git_commit:
-    description: 'Git commit pointing to the specific resources of a version controlled Octopus Project. If empty, it will use the HEAD from the corresponding gitRef parameter.'
   guided_failure:
     default: false
     description: 'Use Guided Failure mode.'
-  ignore_channel_rules:
-    default: false
-    description: 'Create the release ignoring any version rules specified by the channel.'
-  ignore_existing:
-    default: false
-    description: 'Ignore existing releases if present in Octopus Deploy with the matching version number.'
   ignore_ssl_errors:
     default: false
     description: 'Ignore certificate errors when communicating with Octopus Deploy. Warning: enabling this option creates a security vulnerability.'
@@ -63,17 +50,6 @@ inputs:
   no_raw_log:
     default: false
     description: 'Print the raw log of failed tasks.'
-  package:
-    deprecationMessage: 'Please use the input parameter, "packages" instead; it supports multi-line input lists with the same format.'
-    description: 'The version number to use for a package in the release (format: StepName:Version or PackageID:Version or StepName:PackageName:Version).'
-  package_prerelease:
-    description: 'Pre-release for latest version of all packages to use for this release.'
-  package_version:
-    description: 'The version number of all packages to use for this release.'
-  packages:
-    description: 'A multi-line list of version numbers to use for a package in the release. Format: StepName:Version or PackageID:Version or StepName:PackageName:Version. StepName, PackageID, and PackageName can be replaced with an asterisk ("*"). An asterisk will be assumed for StepName, PackageID, or PackageName if they are omitted.'
-  packages_folder:
-    description: 'The folder designated for containing packages.'
   password:
     description: 'The password to used to authenticate with Octopus Deploy. It is strongly recommended to retrieve this value from a GitHub secret.'
   progress:
@@ -89,10 +65,6 @@ inputs:
     description: 'The username used to connect to a proxy. It is strongly recommended to retrieve this value from a GitHub secret.'
   raw_log_file:
     description: 'Redirect the raw log of failed tasks to a file.'
-  release_notes:
-    description: 'The release notes associated with the new release (Markdown is supported).'
-  release_notes_file:
-    description: 'Path to a file that contains release notes for the new release. Supports Markdown files.'
   release_number:
     description: 'The number for the new release.'
   server:
@@ -112,14 +84,13 @@ inputs:
     description: 'A timeout value in seconds for network operations.'
   username:
     description: 'The username used to authenticate with Octopus Deploy. You must provide an apiKey or username and password. It is strongly recommended to retrieve this value from a GitHub secret.'
+  update_variables:
+    description: Overwrite the variable snapshot for the release by re-importing the variables from the project.
   variable:
     description: 'Values for any prompted variables in the format, Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash.'
   wait_for_deployment:
     default: false
     description: 'Wait for deployment to finish.'
-  what_if:
-    default: false
-    description: 'Perform a dry run; do not create or deploy a release.'
 
 runs:
   using: 'node12'

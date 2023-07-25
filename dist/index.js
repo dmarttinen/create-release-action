@@ -3313,8 +3313,6 @@ function getArgs(parameters) {
         args.push(`--configFile=${parameters.configFile}`);
     if (parameters.debug)
         args.push(`--debug`);
-    if (parameters.defaultPackageVersion)
-        args.push(`--defaultPackageVersion`);
     if (parameters.deployAt.length > 0)
         args.push(`--deployAt=${parameters.deployAt}`);
     if (parameters.deployTo.length > 0)
@@ -3334,35 +3332,14 @@ function getArgs(parameters) {
     if (parameters.guidedFailure &&
         parameters.guidedFailure.toLowerCase() === 'true')
         args.push(`--guidedFailure=True`);
-    if (parameters.ignoreChannelRules)
-        args.push(`--ignoreChannelRules`);
-    if (parameters.ignoreExisting)
-        args.push(`--ignoreExisting`);
     if (parameters.ignoreSslErrors)
         args.push(`--ignoreSslErrors`);
     if (parameters.logLevel.length > 0 && parameters.logLevel !== `debug`)
         args.push(`--logLevel=${parameters.logLevel}`);
-    if (parameters.gitRef.length > 0)
-        args.push(`--gitRef=${parameters.gitRef}`);
-    if (parameters.gitCommit.length > 0)
-        args.push(`--gitCommit=${parameters.gitCommit}`);
     if (parameters.noDeployAfter.length > 0)
         args.push(`--noDeployAfter=${parameters.noDeployAfter}`);
     if (parameters.noRawLog)
         args.push(`--noRawLog`);
-    // deprecated
-    if (parameters.package.length > 0) {
-        (0, core_1.warning)(`"package" input option specified. This option is deprecated and will be removed in a future release. Please use "packages" instead.`);
-        args.push(`--package=${parameters.package}`);
-    }
-    if (parameters.packages.length > 0)
-        parameters.packages.map(p => args.push(`--package=${p}`));
-    if (parameters.packagePrerelease.length > 0)
-        args.push(`--packagePrerelease=${parameters.packagePrerelease}`);
-    if (parameters.packageVersion.length > 0)
-        args.push(`--packageVersion=${parameters.packageVersion}`);
-    if (parameters.packagesFolder.length > 0)
-        args.push(`--packagesFolder=${parameters.packagesFolder}`);
     if (parameters.password.length > 0)
         args.push(`--pass=${parameters.password}`);
     if (parameters.progress)
@@ -3377,10 +3354,6 @@ function getArgs(parameters) {
         args.push(`--proxyUser=${parameters.proxyUsername}`);
     if (parameters.rawLogFile.length > 0)
         args.push(`--rawLogFile=${parameters.rawLogFile}`);
-    if (parameters.releaseNotes.length > 0)
-        args.push(`--releaseNotes=${parameters.releaseNotes}`);
-    if (parameters.releaseNotesFile.length > 0)
-        args.push(`--releaseNotesFile=${parameters.releaseNotesFile}`);
     if (parameters.releaseNumber.length > 0)
         args.push(`--releaseNumber=${parameters.releaseNumber}`);
     if (parameters.server.length > 0)
@@ -3418,8 +3391,6 @@ function getArgs(parameters) {
         parameters.variables.map(v => args.push(`--variable=${v}`));
     if (parameters.waitForDeployment)
         args.push(`--waitForDeployment`);
-    if (parameters.whatIf)
-        args.push(`--whatIf`);
     return args;
 }
 function createRelease(parameters) {
@@ -3443,13 +3414,13 @@ function createRelease(parameters) {
                         (0, core_1.info)(`✅ Authenticated`);
                         return;
                     }
-                    if (line.includes(' created successfully!')) {
+                    if (line.includes(' deployed successfully!')) {
                         (0, core_1.info)(`🎉 ${line}`);
                         return;
                     }
                     switch (line) {
                         case 'Creating release...':
-                            (0, core_1.info)('🐙 Creating a release in Octopus Deploy...');
+                            (0, core_1.info)('🐙 Deploying a release in Octopus Deploy...');
                             break;
                         default:
                             (0, core_1.info)(`${line}`);
