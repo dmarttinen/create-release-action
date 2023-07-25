@@ -3302,7 +3302,7 @@ const core_1 = __nccwpck_require__(186);
 const exec_1 = __nccwpck_require__(514);
 function getArgs(parameters) {
     (0, core_1.info)('🔣 Parsing inputs...');
-    const args = ['create-release'];
+    const args = ['deploy-release'];
     if (parameters.apiKey.length > 0)
         args.push(`--apiKey=${parameters.apiKey}`);
     if (parameters.cancelOnTimeout)
